@@ -1,0 +1,35 @@
+// Project: SpinJoy
+// Lesson 01: Forward, Backward, and Release
+// IT Samurai Teacher - Youtube Channel
+// Lesson Video: https://youtu.be/9BHuKr8VLQY
+// Subscribe to my channel: https://www.youtube.com/@ITSamuraiTeacher
+// Visit my website: https://www.samuraiteacher.com/
+
+
+// Include the necessary libraries
+#include <AFMotor.h>
+
+// Create an AF_DCMotor object for motor M1
+AF_DCMotor motor(1);
+
+void setup() {
+  Serial.begin(9600);           // initialize serial communication
+  Serial.println("Motor Test!");
+  motor.setSpeed(255);           // set the motor speed (between 0 and 255)
+}
+
+void loop() {
+  Serial.println("Forward");
+  motor.setSpeed(255);
+  motor.run(FORWARD);            // turn it on going forward
+  delay(2000);
+
+  Serial.println("Backward");
+  motor.setSpeed(255);
+  motor.run(BACKWARD);           // turn it on going backward
+  delay(2000);
+
+  Serial.println("Release");
+  motor.run(RELEASE);            // release the motor
+  delay(1000);
+}
