@@ -1,0 +1,30 @@
+// Project: SpinJoy
+// Adafruit Motor Shield - L293D Lesson 02: Servo spin
+// IT Samurai Teacher - Youtube Channel
+// Lesson Video: https://youtu.be/9BHuKr8VLQY
+// Subscribe to my channel: https://www.youtube.com/@ITSamuraiTeacher
+// Visit my website: https://www.samuraiteacher.com/
+
+#include <Servo.h>
+
+Servo myServo;  // Create a Servo object
+
+void setup() {
+  myServo.attach(10);  // Attach the servo to pin 10
+}
+
+void loop() {
+  for (int angle = 0; angle <= 180; angle += 1) {
+    myServo.write(angle);
+    delay(15); // Adjust this delay to control the speed, smaller values make it slower
+  }
+
+  delay(1000); // Pause for a second at the end
+
+  for (int angle = 180; angle >= 0; angle -= 1) {
+    myServo.write(angle);
+    delay(15); // Adjust this delay to control the speed, smaller values make it slower
+  }
+
+  delay(1000); // Pause for a second at the end
+}
