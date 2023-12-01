@@ -1,0 +1,49 @@
+// Project: SpinJoy
+// Adafruit Motor Shield - L293D Lesson 03: Synchronized Servo and DC Motor Control
+// IT Samurai Teacher - Youtube Channel
+// Lesson Video: https://youtu.be/VajbKZA7VbE?si=FAQRWH05dBmt2jkt
+// Subscribe to my channel: https://www.youtube.com/@ITSamuraiTeacher
+// Visit my website: https://www.samuraiteacher.com/
+
+#include <Servo.h>
+#include <AFMotor.h>
+
+Servo servo1;  // Create servo object for first servo
+Servo servo2;  // Create servo object for second servo
+
+AF_DCMotor motor(1);  // Create an AF_DCMotor object for motor M1
+
+void setup() {
+  servo1.attach(9);  // Attach first servo to pin 9
+  servo2.attach(10); // Attach second servo to pin 10
+  motor.setSpeed(255);  // Set speed of the DC motor (0 to 255)
+  Serial.begin(9600);   // Start serial communication for debugging
+}
+
+void loop() {
+  // Move servo motors from 0 to 180 degrees
+  for (int angle = 0; angle <= 180; angle++) {
+    servo1.write(angle);       // Move first servo
+    servo2.write(180 - angle); // Move second servo in opposite direction
+
+    if (angle == 90) {
+      motor.run(FORWARD);      // Start DC motor when first servo reaches 90 degrees
+      delay(500);             // Run the motor forward for 500 milliseconds
+      motor.run(RELEASE);      // Release the motor
+      Serial.println("DC Motor: ON");
+    }
+
+    delay(5);  // Short delay for faster servo movement
+  }
+
+  delay(500);  // Shorter pause at the end of the movement
+
+  // Move servo motors back from 180 to 0 degrees
+  for (int angle = 180; angle >= 0; angle--) {
+    servo1.write(angle);
+    servo2.write(180 - angle);
+    delay(5);
+  }
+
+  delay(500);  // Shorter pause before starting the loop again
+}
