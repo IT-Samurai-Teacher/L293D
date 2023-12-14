@@ -1,0 +1,43 @@
+/ Project: SpinJoy
+// Lesson 03: Ultrasonic Sensor Test
+// IT Samurai Teacher - Youtube Channel
+// Lesson Video: https://youtu.be/Z3FJRHGcyqo
+// Subscribe to my channel: https://www.youtube.com/@ITSamuraiTeacher
+// Visit my website: https://www.samuraiteacher.com/
+
+#define TRIG_PIN A0  // Change to the pin you connected Trig to
+#define ECHO_PIN A1  // Change to the pin you connected Echo to
+
+void setup() {
+  // Initialize the serial communication:
+  Serial.begin(9600);
+
+  // Define the pins for the ultrasonic sensor:
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+}
+
+void loop() {
+  // Clear the TRIG_PIN by setting it LOW:
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(5);
+
+  // Trigger the sensor by setting the TRIG_PIN high for 10 microseconds:
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  // Read the time for the echo to return:
+  long duration = pulseIn(ECHO_PIN, HIGH);
+
+  // Calculate the distance:
+  long distance = duration * 0.034 / 2;
+
+  // Print the distance on the Serial Monitor:
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  // Wait for a short time before repeating:
+  delay(500);
+}
