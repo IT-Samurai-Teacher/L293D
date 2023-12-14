@@ -1,0 +1,56 @@
+/ Project: SpinJoy
+// Lesson 04: DIY Arduino Car with 1 DC Motor, Ultrasonic Sensor & VEX Robot Parts
+// IT Samurai Teacher - Youtube Channel
+// Lesson Video: https://youtu.be/Z3FJRHGcyqo
+// Subscribe to my channel: https://www.youtube.com/@ITSamuraiTeacher
+// Visit my website: https://www.samuraiteacher.com/
+
+#include <AFMotor.h>
+
+// Motor setup
+AF_DCMotor motor(1);
+
+// Ultrasonic sensor setup
+#define TRIG_PIN A0
+#define ECHO_PIN A1
+
+void setup() {
+  // Initialize serial communication
+  Serial.begin(9600);
+  Serial.println("Motor and Ultrasonic Sensor Test");
+
+  // Initialize motor
+  motor.setSpeed(255); // set the motor speed (between 0 and 255)
+
+  // Initialize ultrasonic sensor
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+}
+
+void loop() {
+  // Measure distance
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(5);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  long duration = pulseIn(ECHO_PIN, HIGH);
+  long distance = duration * 0.034 / 2;
+
+  // Print distance
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  // Control motor based on distance
+  if (distance < 30) { // Stop motor if object is closer than 30 cm
+    Serial.println("Object detected, stopping motor");
+    motor.run(RELEASE);
+  } else {
+    Serial.println("Path clear, running motor");
+    motor.run(FORWARD);
+  }
+
+  delay(500); // Adjust this delay as needed
+}
